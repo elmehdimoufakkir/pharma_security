@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Page introuvable')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page message-page"><section class="message-card"><span class="status-code">404</span><p class="eyebrow">PAGE INTROUVABLE</p><h1>Cette page n’est pas disponible</h1><p class="muted">L’adresse demandée ou l’élément recherché n’existe pas.</p><a class="button button-primary" th:href="@{/}">Revenir à l’accueil</a></section></main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

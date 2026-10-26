@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Utilisateurs')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page">
+    <div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1>Utilisateurs</h1><p class="muted">Gérez les comptes et leurs autorisations.</p></div><a class="button button-primary" th:href="@{/admin/utilisateurs/nouveau}">+ Créer un utilisateur</a></div>
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="panel">
+        <div class="panel-heading"><h2>Comptes de l’application</h2><span class="count-label" th:text="${#lists.size(users) + ' compte(s)'}"></span></div>
+        <div class="table-wrap"><table><caption class="sr-only">Liste des utilisateurs</caption><thead><tr><th scope="col">Nom d’utilisateur</th><th scope="col">Rôle</th><th scope="col">État du compte</th><th scope="col">Action</th></tr></thead><tbody>
+        <tr th:each="user : ${users}"><td><strong th:text="${user.username}"></strong></td><td><span class="role-label" th:text="${user.role.name}"></span></td><td><span class="badge" th:classappend="${user.enabled ? 'badge-success' : 'badge-muted'}" th:text="${user.enabled ? 'Actif' : 'Désactivé'}"></span></td><td><a class="text-link" th:href="@{/admin/utilisateurs/{id}/modifier(id=${user.id})}">Modifier</a></td></tr>
+        <tr th:if="${#lists.isEmpty(users)}"><td colspan="4" class="empty-state">Aucun utilisateur à afficher.</td></tr>
+        </tbody></table></div>
+    </section>
+    <aside class="info-strip"><span class="info-dot" aria-hidden="true"></span><p>Un compte désactivé ne peut plus ouvrir de nouvelle session.</p></aside>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

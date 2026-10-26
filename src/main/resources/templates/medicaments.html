@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head('Médicaments')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page">
+    <div class="page-heading"><div><p class="eyebrow">CATALOGUE</p><h1>Médicaments</h1><p class="muted" sec:authorize="hasRole('CLIENT')">Les médicaments disponibles, en consultation.</p><p class="muted" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')">Le catalogue et la disponibilité de chaque médicament.</p></div><a class="button button-primary" th:href="@{/medicaments/nouveau}" sec:authorize="hasRole('ADMIN')">+ Ajouter un médicament</a></div>
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="panel">
+        <div class="panel-heading"><h2>Catalogue actif</h2><span class="count-label" th:text="${#lists.size(medicaments) + ' médicament(s)'}"></span></div>
+        <div class="table-wrap"><table><caption class="sr-only">Liste des médicaments</caption><thead><tr><th scope="col">Médicament</th><th scope="col">Prix unitaire</th><th scope="col">Stock</th><th scope="col" sec:authorize="hasRole('ADMIN')">Actions</th></tr></thead><tbody>
+        <tr th:each="medicament : ${medicaments}"><td><strong th:text="${medicament.nom}"></strong><span class="cell-description" th:text="${medicament.description}"></span></td><td class="numeric" th:text="${#numbers.formatDecimal(medicament.prix, 1, 2)}"></td><td><span class="badge" th:classappend="${medicament.quantite > 0 ? 'badge-success' : 'badge-warning'}" th:text="${medicament.quantite > 0 ? medicament.quantite + ' disponible(s)' : 'Rupture de stock'}"></span></td><td sec:authorize="hasRole('ADMIN')"><div class="row-actions"><a class="text-link" th:href="@{/medicaments/{id}/modifier(id=${medicament.id})}">Modifier</a><form th:action="@{/medicaments/{id}/supprimer(id=${medicament.id})}" method="post"><button class="text-link text-danger" type="submit">Retirer</button></form></div></td></tr>
+        <tr th:if="${#lists.isEmpty(medicaments)}"><td colspan="4" class="empty-state">Aucun médicament à afficher pour le moment.</td></tr>
+        </tbody></table></div>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

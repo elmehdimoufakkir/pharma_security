@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Connexion')}"></head>
+<body class="login-page">
+<main class="login-shell">
+    <section class="login-intro" aria-labelledby="intro-title">
+        <div class="brand brand-light"><span class="brand-mark" aria-hidden="true">+</span><span>Pharma<span class="brand-caption">Gestion de pharmacie</span></span></div>
+        <div>
+            <p class="eyebrow">ESPACE DE GESTION</p>
+            <h1 id="intro-title">Votre pharmacie,<br>en toute simplicité.</h1>
+            <p class="intro-copy">Retrouvez les médicaments, les stocks et les ventes dans un espace adapté à votre rôle.</p>
+        </div>
+        <p class="login-footnote">TP 2 · Authentification et autorisation</p>
+    </section>
+    <section class="login-panel" aria-labelledby="login-title">
+        <p class="eyebrow">BIENVENUE</p>
+        <h2 id="login-title">Se connecter</h2>
+        <p class="muted">Saisissez vos identifiants pour accéder à votre espace.</p>
+        <div class="alert alert-error" role="alert" th:if="${param.error}">Identifiant ou mot de passe incorrect, ou compte désactivé.</div>
+        <div class="alert alert-success" th:if="${param.logout}">Vous êtes déconnecté.</div>
+        <form class="stack-form" th:action="@{/login}" method="post">
+            <div class="field"><label for="username">Nom d’utilisateur</label><input id="username" name="username" type="text" autocomplete="username" maxlength="50" required autofocus></div>
+            <div class="field"><label for="password">Mot de passe</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+            <button class="button button-primary button-full" type="submit">Connexion <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="small muted login-help">Vos droits d’accès sont associés à votre compte.</p>
+    </section>
+</main>
+</body>
+</html>

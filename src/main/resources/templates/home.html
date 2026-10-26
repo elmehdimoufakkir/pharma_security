@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head('Accueil')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page">
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="welcome-banner">
+        <div><p class="eyebrow">VOTRE ESPACE</p><h1>Bonjour, <span sec:authentication="name">utilisateur</span>.</h1><p>Choisissez une activité pour commencer.</p></div>
+        <span class="welcome-symbol" aria-hidden="true">+</span>
+    </section>
+    <section class="card-grid" aria-label="Activités disponibles">
+        <a class="activity-card" th:href="@{/medicaments}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CLIENT')"><span class="card-number">01 / CATALOGUE</span><h2>Médicaments</h2><p sec:authorize="hasRole('CLIENT')">Consulter les médicaments actuellement disponibles.</p><p sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')">Consulter le catalogue et la disponibilité des produits.</p><span class="card-link">Ouvrir le catalogue <span aria-hidden="true">→</span></span></a>
+        <a class="activity-card" th:href="@{/stocks}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')"><span class="card-number">02 / INVENTAIRE</span><h2>Stocks</h2><p>Consulter les quantités et mettre à jour les stocks.</p><span class="card-link">Gérer les stocks <span aria-hidden="true">→</span></span></a>
+        <a class="activity-card" th:href="@{/ventes}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CAISSIER')"><span class="card-number">03 / ENCAISSEMENT</span><h2>Ventes</h2><p>Enregistrer une vente et retrouver les opérations récentes.</p><span class="card-link">Accéder aux ventes <span aria-hidden="true">→</span></span></a>
+        <a class="activity-card" th:href="@{/admin}" sec:authorize="hasRole('ADMIN')"><span class="card-number">04 / ADMINISTRATION</span><h2>Utilisateurs</h2><p>Créer des comptes et attribuer les droits d’accès.</p><span class="card-link">Gérer les utilisateurs <span aria-hidden="true">→</span></span></a>
+    </section>
+    <aside class="info-strip"><span class="info-dot" aria-hidden="true"></span><p>Les activités affichées correspondent aux autorisations de votre compte.</p></aside>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

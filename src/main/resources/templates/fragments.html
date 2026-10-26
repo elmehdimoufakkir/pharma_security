@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title + ' · Pharma'}">Pharma</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header class="site-header" th:fragment="nav">
+    <div class="header-inner">
+        <a class="brand" th:href="@{/}"><span class="brand-mark" aria-hidden="true">+</span><span>Pharma<span class="brand-caption">Gestion de pharmacie</span></span></a>
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a th:href="@{/}">Accueil</a>
+            <a th:href="@{/medicaments}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CLIENT')">Médicaments</a>
+            <a th:href="@{/stocks}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN')">Stocks</a>
+            <a th:href="@{/ventes}" sec:authorize="hasAnyRole('ADMIN','PHARMACIEN','CAISSIER')">Ventes</a>
+            <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')">Utilisateurs</a>
+        </nav>
+        <div class="account">
+            <span class="account-name" sec:authentication="name">Utilisateur</span>
+            <form th:action="@{/logout}" method="post"><button class="button button-quiet" type="submit">Déconnexion</button></form>
+        </div>
+    </div>
+</header>
+<div th:fragment="alerts" class="alerts" aria-live="polite">
+    <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
+    <div class="alert alert-error" role="alert" th:if="${error}" th:text="${error}"></div>
+</div>
+<footer class="site-footer" th:fragment="footer"><span>Pharma</span><span>TP 2 · Spring Boot &amp; Spring Security</span></footer>
+</body>
+</html>

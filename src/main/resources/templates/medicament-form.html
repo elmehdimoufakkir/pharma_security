@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Fiche médicament')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page page-narrow">
+    <a class="back-link" th:href="@{/medicaments}">← Retour au catalogue</a>
+    <div class="page-heading"><div><p class="eyebrow">CATALOGUE</p><h1 th:text="${medicamentId == null ? 'Ajouter un médicament' : 'Modifier le médicament'}"></h1><p class="muted">Renseignez les informations de la fiche.</p></div></div>
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="panel form-panel">
+        <form class="stack-form" th:object="${medicamentForm}" th:action="${medicamentId == null} ? @{/medicaments} : @{/medicaments/{id}/modifier(id=${medicamentId})}" method="post">
+            <div class="alert alert-error" role="alert" th:if="${#fields.hasGlobalErrors()}"><p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p></div>
+            <div class="field"><label for="nom">Nom du médicament</label><input id="nom" type="text" th:field="*{nom}" required maxlength="120" th:errorclass="input-error"><p class="field-error" th:errors="*{nom}"></p></div>
+            <div class="field"><label for="description">Description <span class="optional">(facultatif)</span></label><textarea id="description" th:field="*{description}" rows="4" maxlength="1000" th:errorclass="input-error"></textarea><p class="field-error" th:errors="*{description}"></p></div>
+            <div class="form-columns"><div class="field"><label for="prix">Prix unitaire</label><input id="prix" type="number" th:field="*{prix}" min="0.01" step="0.01" required th:errorclass="input-error"><p class="field-error" th:errors="*{prix}"></p></div><div class="field" th:if="${medicamentId == null}"><label for="quantite">Quantité initiale</label><input id="quantite" type="number" th:field="*{quantite}" min="0" step="1" required th:errorclass="input-error"><p class="field-error" th:errors="*{quantite}"></p></div></div>
+            <p class="small muted" th:if="${medicamentId != null}">Pour changer les quantités, utilisez la page Stocks.</p>
+            <div class="form-actions"><button class="button button-primary" type="submit">Enregistrer</button><a class="button button-secondary" th:href="@{/medicaments}">Annuler</a></div>
+        </form>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Erreur')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page message-page"><section class="message-card"><span class="status-code">500</span><p class="eyebrow">ERREUR DE L’APPLICATION</p><h1>L’opération n’a pas abouti</h1><p class="muted">Réessayez dans quelques instants. Si le problème persiste, contactez l’administrateur.</p><a class="button button-primary" th:href="@{/}">Revenir à l’accueil</a></section></main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

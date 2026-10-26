@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Accès refusé')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page message-page"><section class="message-card"><span class="status-code">403</span><p class="eyebrow">AUTORISATION REQUISE</p><h1>Accès refusé</h1><p class="muted">Votre rôle ne vous permet pas d’accéder à cette page ou d’effectuer cette action.</p><a class="button button-primary" th:href="@{/}">Revenir à l’accueil</a></section></main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

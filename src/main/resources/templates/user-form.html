@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Fiche utilisateur')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page page-narrow">
+    <a class="back-link" th:href="@{/admin}">← Retour aux utilisateurs</a>
+    <div class="page-heading"><div><p class="eyebrow">ADMINISTRATION</p><h1 th:text="${userId == null ? 'Créer un utilisateur' : 'Modifier l’utilisateur'}"></h1><p class="muted">Attribuez un rôle et gérez l’accès au compte.</p></div></div>
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="panel form-panel">
+        <form class="stack-form" th:object="${userForm}" th:action="${userId == null} ? @{/admin/utilisateurs} : @{/admin/utilisateurs/{id}/modifier(id=${userId})}" method="post">
+            <div class="alert alert-error" role="alert" th:if="${#fields.hasGlobalErrors()}"><p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p></div>
+            <div class="field"><label for="username">Nom d’utilisateur</label><input id="username" type="text" th:field="*{username}" autocomplete="off" required maxlength="50" th:errorclass="input-error"><p class="field-error" th:errors="*{username}"></p></div>
+            <div class="field"><label for="password" th:text="${userId == null ? 'Mot de passe' : 'Nouveau mot de passe (facultatif)'}"></label><input id="password" type="password" name="password" autocomplete="new-password" th:required="${userId == null}" minlength="8" maxlength="72" th:errorclass="input-error"><p class="field-hint" th:if="${userId == null}">Au moins 8 caractères.</p><p class="field-hint" th:if="${userId != null}">Laissez ce champ vide pour conserver le mot de passe actuel.</p><p class="field-error" th:errors="*{password}"></p></div>
+            <div class="field"><label for="roleName">Rôle</label><select id="roleName" th:field="*{roleName}" required th:errorclass="input-error"><option th:each="roleName : ${roleNames}" th:value="${roleName}" th:text="${roleName}"></option></select><p class="field-error" th:errors="*{roleName}"></p></div>
+            <div class="checkbox-field"><input id="enabled" type="checkbox" th:field="*{enabled}"><label for="enabled">Compte actif</label></div>
+            <p class="small muted">Désactivez le compte pour empêcher les nouvelles connexions.</p>
+            <div class="form-actions"><button class="button button-primary" type="submit">Enregistrer</button><a class="button button-secondary" th:href="@{/admin}">Annuler</a></div>
+        </form>
+    </section>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

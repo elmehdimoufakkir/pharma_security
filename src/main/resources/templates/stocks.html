@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Stocks')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+<main class="page">
+    <div class="page-heading"><div><p class="eyebrow">INVENTAIRE</p><h1>Gestion des stocks</h1><p class="muted">Saisissez la nouvelle quantité totale en stock.</p></div></div>
+    <div th:replace="~{fragments :: alerts}"></div>
+    <section class="panel">
+        <div class="panel-heading"><h2>Quantités disponibles</h2><span class="count-label" th:text="${#lists.size(medicaments) + ' médicament(s)'}"></span></div>
+        <div class="table-wrap"><table><caption class="sr-only">Mise à jour du stock par médicament</caption><thead><tr><th scope="col">Médicament</th><th scope="col">Stock actuel</th><th scope="col">Nouvelle quantité totale</th></tr></thead><tbody>
+        <tr th:each="medicament : ${medicaments}"><td><strong th:text="${medicament.nom}"></strong><span class="cell-description" th:text="${medicament.description}"></span></td><td><span class="badge" th:classappend="${medicament.quantite > 0 ? 'badge-success' : 'badge-warning'}" th:text="${medicament.quantite}"></span></td><td><form class="inline-form" th:action="@{/stocks/{id}(id=${medicament.id})}" method="post"><label class="sr-only" th:for="${'quantite-' + medicament.id}" th:text="${'Nouvelle quantité pour ' + medicament.nom}"></label><input th:id="${'quantite-' + medicament.id}" name="quantite" type="number" min="0" step="1" th:value="${medicament.quantite}" required><button class="button button-secondary" type="submit">Mettre à jour</button></form></td></tr>
+        <tr th:if="${#lists.isEmpty(medicaments)}"><td colspan="3" class="empty-state">Aucun médicament à gérer.</td></tr>
+        </tbody></table></div>
+    </section>
+    <aside class="info-strip"><span class="info-dot" aria-hidden="true"></span><p>Les ventes enregistrées diminuent automatiquement les quantités en stock.</p></aside>
+</main>
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>
